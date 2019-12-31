@@ -29,9 +29,7 @@ public class Main {
                        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
                        clientSentence = inFromClient.readLine();
-                       modifiedSentence = clientSentence.toUpperCase() + "\n";
                        System.out.println("Datagrama TCP Procesado: " + clientSentence);
-                       outToClient.writeBytes(modifiedSentence);
 
                        Socket clientSocket = new Socket("127.0.0.1", 4900);
 
@@ -41,15 +39,16 @@ public class Main {
                        outToServer.writeBytes(clientSentence + "\r\n");
                        System.out.println("Mensaje enviado");
 
-                       modifiedSentence = inFromServer.readLine();
+                       modifiedSentence = inFromServer.readLine()+ "\n";
+                       outToClient.writeBytes(modifiedSentence);
                        System.out.println("Respuesta del Servidor: " + modifiedSentence);
                        clientSocket.close();
-                       System.out.println("Desea continuar? [T/F]: ");
+                       /*System.out.println("Desea continuar? [T/F]: ");
                        BufferedReader selection = new BufferedReader(new InputStreamReader(System.in));
                        String sel = selection.readLine().toUpperCase();
                         if(sel.equalsIgnoreCase("F")) {
                                break;
-                           }
+                           }*/
                }
            } catch (IOException e) {
                e.printStackTrace();
